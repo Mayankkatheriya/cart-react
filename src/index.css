@@ -1,13 +1,175 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+}
+
+#root {
+  width: 100%;
+}
+
+.App {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url(./Assets/front-view-woman-with-shopping-bag-concept_23-2148674158.jpg);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+main {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.products, .cart{
+  border: 6px solid rgb(182, 236, 171);
+  border-radius: 20px 0 0 20px;
+  width: 50%;
+  min-width: 300px;
+  max-width: 400px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem 10px;
+  backdrop-filter: blur(20px);
+}
+
+.product{
+  background-color: rgb(166,166,166);
+  border-radius: 8px;
+  color: white;
+  padding: 8px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+}
+.price{
+  color: rgb(5, 88, 43);
+}
+.productName{
+  color: crimson;
+}
+.products h2{
+  color: rgb(233, 169, 74);
+}
+.product h4{
+  font-weight: 500;
+}
+.product p{
+  font-weight: 700;
+}
+.numbers{
+  border: 2px solid grey;
+  background-color: rgb(59,147,169);
+  color: white;
+  font-weight: 700;
+  border-radius: 20px;
+  width: 100px;
+  /* padding: 2px 0; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.add, .remove{
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: rgb(0, 0, 58);
+  height: 100%;
+  width: 30px;
+  background: transparent;
+}
+.add{
+  border-radius: 0 50px 50px 0;
+}
+.remove{
+  border-radius: 50px 0 0 50px;
+}
+.add:hover, .remove:hover{
+  transform: scale(1.12);
+}
+
+.cart{
+  border: 8px solid rgb(153, 238, 104);
+  border-radius: 0 20px 20px 0;
+}
+.cart h2{
+  color: rgb(231, 228, 46)
+}
+.cart-content{
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-item h4 {
+  text-transform: capitalize;
+}
+.cart p{
+  font-size: 1.1rem;
+  text-align: center;
+}
+#noEle{
+  font-weight: 500;
+  color: rgb(248, 169, 169);
+}
+
+.cart p span{
+  font-weight: bold;
+  font-size: 4rem;
+}
+
+.cart-content{
+  width: 100%;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #000;
+}
+.last{
+  margin-top: auto;
+  background-color: rgb(156, 212, 25);
+}
+.last h4{
+  font-size: 1.5rem;
+  color: brown;
+}
+.total{
+  color: rgb(16, 58, 0);
+}
+
+
+
+@media screen and (max-width: 526px) {
+  .cart{
+      min-width: 300px;
+      border-radius: 0 0 20px 20px;
+  }
+  .products{
+      border-radius: 20px 20px 0 0;
+  }
 }
