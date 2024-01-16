@@ -4,11 +4,10 @@ import Products from "./Products";
 import Cart from "./Cart";
 
 const Main = () => {
-
-    // todo --------- reducer function for useReducer ----------->
+  // todo --------- reducer function for useReducer ----------->
   const reducer = (initState, action) => {
     switch (action.type) {
-        //*-------when + button click chnages in product List------->
+      //*-------when + button click chnages in product List------->
       case "Incr":
         return {
           ...initState,
@@ -19,7 +18,7 @@ const Main = () => {
             return item;
           }),
         };
-        //*-------when + button click chnages in cart List------->
+      //*-------when + button click chnages in cart List------->
       case "AddToCart":
         const selectedItem = initState.productsData.find(
           (item) => item.id === action.payload
@@ -42,7 +41,7 @@ const Main = () => {
             cartData: updatedCart,
           };
         }
-        //*-------when - button click chnages in product List------->
+      //*-------when - button click chnages in product List------->
       case "Decr":
         return {
           ...initState,
@@ -53,7 +52,7 @@ const Main = () => {
             return item;
           }),
         };
-        //*-------when - button click chnages in cart List------->
+      //*-------when - button click chnages in cart List------->
       case "DecrFromCart":
         const updatedCart = initState.cartData.map((item) => {
           if (item.id === action.payload && item.count > 0) {
@@ -66,25 +65,42 @@ const Main = () => {
           ...initState,
           cartData: updatedCart.filter((item) => item.count > 0),
         };
-        //*------case to handle add new product-------->
-        case "addItem":
-            let prodName = window.prompt("Product Name")
-            let price = window.prompt("Price (Only Numbers)")
-            //check if any alphabet is present in price
-            while (/[^0-9.]/g.test(price) || price < 1) {
-              alert('Please enter a valid number for the price')
-              price = window.prompt('Price (Only Numbers)')
-              }
-            return {
-                ...initState,
-                productsData:[...initState.productsData ,{id:Math.random(),name:prodName,price:price, count:0}]
-            }
-      default:
+      //*------case to handle add new product-------->
+      case "addItem":
+        let prodName = window.prompt("Product Name");
+        //check if prodName is Empty
+        while (prodName.length === 0) {
+          alert("Please enter a valid Product name");
+          prodName = window.prompt("Product Name");
+        }
+        let price = window.prompt("Price (Only Numbers)");
+        //check if any alphabet is present in price
+        while (/[^0-9.]/g.test(price) || price < 1) {
+          alert("Please enter a valid number for the price");
+          price = window.prompt("Price (Only Numbers)");
+        }
+        return {
+          ...initState,
+          productsData: [
+            ...initState.productsData,
+            { id: nanoid(), name: prodName, price: price, count: 0 },
+          ],
+        };
+      //*--------case for delete product------------->
+      case "deleteProduct":
+        return {
+          ...initState,
+          productsData: initState.productsData.filter(
+            (product) => product.id !== action.payload
+          ),
+        };
+      
+        default:
         return initState;
     }
   };
 
-// todo ------- useReducer -------------->
+  // todo ------- useReducer -------------->
   const [state, dispatch] = useReducer(reducer, {
     productsData: [
       { id: 1, name: "Shirt", price: "650", count: 0 },
@@ -94,13 +110,14 @@ const Main = () => {
     cartData: [],
   });
 
-
   return (
     <main>
       <div className="products">
         <h2>Men's Fashion</h2>
         <div className="add-item">
-            <button onClick={() => dispatch({type: "addItem"})}>Add Product</button>
+          <button onClick={() => dispatch({ type: "addItem" })}>
+            Add Product
+          </button>
         </div>
         {state.productsData.map((item) => {
           return (
@@ -115,6 +132,9 @@ const Main = () => {
                 dispatch({ type: "Incr", payload: item.id });
                 dispatch({ type: "AddToCart", payload: item.id });
               }}
+              onDelete={() =>
+                dispatch({ type: "deleteProduct", payload: item.id })
+              }
             />
           );
         })}
@@ -128,7 +148,7 @@ const Main = () => {
               <span>!</span>
             </p>
           ) : (
-            <Cart cartData = {state.cartData} />
+            <Cart cartData={state.cartData} />
           )}
         </div>
       </div>
